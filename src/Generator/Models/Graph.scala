@@ -11,10 +11,12 @@ case class Edge(state: AnyVal) extends Node{
 trait Graph{
 	type GraphMap = Set[(Node, Node)]
 	val connections: GraphMap
+	
+	lazy val groupedConections = connections groupBy(_._1) map(kv => ( kv._1 -> (kv._2 map(_._2)) ))
+	
+	override def toString() = groupedConections toString
 
-	override def toString() = connections toString
-
-	def apply(n: Node): Set[Node] = connections filter(_._1 == n) map(_._2)
+	def apply(n: Node): Set[Node] = if(groupedConections isDefinedAt(n)) groupedConections(n) else Set()
 	
 	def connect(n1: Node, n2: Node): Graph
 	
