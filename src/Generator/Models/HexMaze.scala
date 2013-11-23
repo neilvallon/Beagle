@@ -19,8 +19,7 @@ case class HexNode(x:Int, y:Int) extends Node[HexNode]{
 	def neighbors(): Set[HexNode] = if(y % 2 == 0) even() else odd()
 }
 
-class HexMaze(width: Int, height: Int) extends Generator{
-	val random = new Random()
+class HexMaze(width: Int, height: Int, random:Random = new Random()) extends Generator{
 	type NodeType = HexNode
 	type Connections = Set[(HexNode, HexNode)];
 

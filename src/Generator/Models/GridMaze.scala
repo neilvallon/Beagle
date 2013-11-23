@@ -13,8 +13,7 @@ case class GridNode(x:Int, y:Int) extends Node[GridNode]{
 		    GridNode(x, y+1), GridNode(x, y-1))
 }
 
-class GridMaze(width: Int, height: Int) extends Generator{
-	val random = new Random()
+class GridMaze(width: Int, height: Int, random:Random = new Random()) extends Generator{
 	type NodeType = GridNode
 	type Connections = Set[(NodeType, NodeType)];
 
