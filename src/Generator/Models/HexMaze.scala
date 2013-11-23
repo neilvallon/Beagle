@@ -68,8 +68,12 @@ class HexMaze(width: Int, height: Int, random:Random = new Random()) extends Gen
 			case HexNode(-1, 0) => "left"
 		}
 
-
-	lazy val newMap = generate(Set(), Set(HexNode(0, 0)), Set())
+	
+	def mazeStream(): Stream[Connections] = 
+		generate(Set(), Set(HexNode(0, 0)), Set()) #:: mazeStream()
+	
+	lazy val newMap = mazeStream filter (_.size >= width) head
+	
 	lazy val groupedConections = newMap groupBy(_._1) map(kv => ( kv._1 -> (kv._2 map(_._2)) ))
 	def apply(n: HexNode): Set[HexNode] = if(groupedConections isDefinedAt(n)) groupedConections(n) else Set()
 

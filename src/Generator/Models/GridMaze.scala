@@ -42,7 +42,11 @@ class GridMaze(width: Int, height: Int, random:Random = new Random()) extends Ge
 
 
 //////////////////////// code bellow is required for web output only
-	lazy val newMap = generate(Set(), Set(GridNode(0, 0)), Set())
+	def mazeStream(): Stream[Connections] = 
+		generate(Set(), Set(GridNode(0, 0)), Set()) #:: mazeStream()
+		
+	lazy val newMap = mazeStream filter (_.size >= width) head
+	
 	lazy val groupedConections = newMap groupBy(_._1) map(kv => ( kv._1 -> (kv._2 map(_._2)) ))
 	
 	def apply(n: NodeType): Set[NodeType] = if(groupedConections isDefinedAt(n)) groupedConections(n) else Set()
