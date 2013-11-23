@@ -19,7 +19,7 @@ class GridMaze(width: Int, height: Int) extends Generator{
 	type Connections = Set[(NodeType, NodeType)];
 
 	def neighbors(n: NodeType): Set[NodeType] =
-		n.neighbors() filter ((c) => (c.x>=0 && c.x<=width) && (c.y>=0 && c.y<=height)) filter (_ => (random nextFloat) < 0.6)
+		n.neighbors() filter ((c) => (c.x>=0 && c.x<=width) && (c.y>=0 && c.y<=height)) filter (_ => (random nextFloat) < 0.75)
 
 	def connect(n: NodeType, ns: Set[NodeType], c: Connections) =
 		ns.flatMap(b => Set((n, b), (b, n))) | c
