@@ -58,7 +58,7 @@ class GridMaze(width: Int, height: Int) extends Generator{
 		}
 	
 	def css(n: NodeType) =
-		this(n) map(ce => cssClass(n - ce)) mkString " "
+		this(n) map(ce => cssClass(ce - n)) mkString " "
 
 
 	override def toString() = 
