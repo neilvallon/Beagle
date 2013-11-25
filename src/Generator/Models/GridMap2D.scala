@@ -45,10 +45,10 @@ class GridMap(width: Int, height: Int, random:Random = new Random()) extends Gen
 	def mazeStream(): Stream[Connections] = 
 		generate(Vector.fill(height, width)(false), Set(MapNode(width/2, height/2)), Set()) #:: mazeStream()
 	
-	def trueCount(c: Connections): Int = c flatMap (_ filter(a => a) ) size
-	
+	def trueCount(c: Connections): Int = c map (_.count(a => a) ) sum
+
 	lazy val newMap = mazeStream filter (trueCount(_) >= 2*(width+height)) head
 	
-	override def toString() = 
-		(0 until height) map (y => ((for(x <- 0 until width) yield "<div class='" + (if(newMap(y)(x)) "active") + "'></div>") mkString)) mkString "<br />"
+	override def toString() =
+		newMap.map(_.map(b => "<div class='" + (if(b) "active" else "") + "'></div>") mkString ) mkString "<br />"
 }
