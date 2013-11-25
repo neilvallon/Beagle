@@ -1,6 +1,7 @@
 package Generator.Models
 import Generator._
 import java.util.Random
+import scala.annotation.tailrec
 
 
 case class MapNode(x:Int, y:Int) extends Node[MapNode]{
@@ -23,7 +24,8 @@ class GridMap(width: Int, height: Int, random:Random = new Random()) extends Gen
 	def connect(n: NodeType, ns: Set[NodeType], c: Connections) =
 		c.updated(n.y, c(n.y).updated(n.x, true))
 
-	def generate(c: Connections, f: Set[NodeType], e: Set[NodeType]): Connections =
+	@tailrec
+	private def generate(c: Connections, f: Set[NodeType], e: Set[NodeType]): Connections =
 		f toList match{
 			case Nil => c
 			case h::t => {
